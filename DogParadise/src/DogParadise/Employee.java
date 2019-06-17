@@ -14,12 +14,15 @@ public class Employee {
     private String user;
     private String password;
     private String typeemployee;
-    String provagit;
 
-    public Employee(String user, String password, String typeemployee) {
+    public Employee(String user, String password) {
         this.user = user;
         this.password = password;
-        this.typeemployee = typeemployee;
+    }
+
+
+
+    public Employee() {
     }
 
     public String getUser() {
