@@ -10,10 +10,11 @@ package DogParadise;
  * @author aladelia
  */
 public class Employee {
-    
+
     private String user;
     private String password;
     private String typeemployee;
+    String provagit;
 
     public Employee(String user, String password, String typeemployee) {
         this.user = user;
@@ -44,5 +45,5 @@ public class Employee {
     public void setTypeemployee(String typeemployee) {
         this.typeemployee = typeemployee;
     }
-    
+
 }
