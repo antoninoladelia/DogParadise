@@ -10,7 +10,7 @@ package DogParadise;
  * @author aladelia
  */
 public class VeterinaryClinic {
-
+string ciao;
     public VeterinaryClinic() {
     }
     
