@@ -20,7 +20,11 @@ public class Employee {
         this.password = password;
     }
 
-
+public Employee(String user, String password,String typeemployee) {
+        this.user = user;
+        this.password = password;
+        this.typeemployee = typeemployee;
+    }
 
     public Employee() {
     }

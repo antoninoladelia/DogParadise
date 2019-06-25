@@ -108,7 +108,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
     private void jToggleButtonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonLoginMouseClicked
         // TODO add your handling code here:
-        String username = jTextFieldPassword.getText();
+        String username = jTextFieldUsername.getText();
         String password = jTextFieldPassword.getText();
         System.out.println(username+" "+password);
         
