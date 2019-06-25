@@ -46,10 +46,7 @@ public class Login {
 
         for (i = 0; i < this.employeeMapList.size(); i++) {
 
-            String x = this.employeeMapList.get(i).getUser();
-            String y = this.employeeMapList.get(i).getPassword();
-            System.out.println(x + y);
-
+            
             if (username.equals(this.employeeMapList.get(i).getUser()) && password.equals(this.employeeMapList.get(i).getPassword())) {
 
                 //prendere valore type dalla mappa
@@ -61,7 +58,7 @@ public class Login {
                         return 1;
                 }
             } else {
-                System.out.println("error");
+                System.out.println("Error!");
             }
         }
         return -1;
@@ -105,17 +102,16 @@ public class Login {
 
     //Json file reader method
     public void ReadJson() {
-        int index = 0;
+        int i = 0;
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("employees.json")) {
-            index++;
+            i++;
             //Read JSON file
             Object obj = jsonParser.parse(reader);
 
             JSONArray employeeList = (JSONArray) obj;
-            System.out.println(employeeList);
 
             //Iterate over employee array
             employeeList.forEach(emp -> parseEmployeeObject((JSONObject) emp));
