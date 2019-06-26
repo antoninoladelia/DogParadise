@@ -27,17 +27,20 @@ public class Login {
     private int index = 0;
 
     private HashMap<Integer, Employee> employeeMapList = new HashMap<>();
+    
+    private static Login istance=null;
 
-    public Login() {
+    private  Login() {}
+    
+    public static Login getIstance() {
+                if(istance==null)
+                        istance = new Login();
+                return istance;
+        }
 
-    }
 
-    public Login(Employee employee) {
-        this.employee = employee;
-
-    }
-
-    public int checkLogin() {
+    public int checkLogin(Employee employee) {
+        
         String username = employee.getUser();
         String password = employee.getPassword();
         this.ReadJson();

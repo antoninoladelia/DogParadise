@@ -111,8 +111,8 @@ public class LoginGUI extends javax.swing.JFrame {
         
         Employee employee = new Employee(username,password);
         
-        Login  login = new Login(employee);
-        int typeGUI = login.checkLogin();
+        Login  login = Login.getIstance();
+        int typeGUI = login.checkLogin(employee);
         
         switch(typeGUI){
             case 0:

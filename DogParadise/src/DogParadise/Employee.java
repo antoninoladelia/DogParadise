@@ -29,10 +29,7 @@ public Employee(String user, String password,String typeemployee) {
     public Employee() {
     }
 
-    Employee(String name, String race, String color, int Age, String Gender, String size) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+ 
     public String getUser() {
         return user;
     }
