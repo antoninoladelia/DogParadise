@@ -20,12 +20,11 @@ import org.json.simple.parser.ParseException;
  *
  * @author aladelia
  */
-public class Dog {
+public class Dog extends JsonTools {
 
     private int index = 0;
 
-    private JSONObject dogObject = new JSONObject();
-    private JSONArray dogList = new JSONArray();
+    
     
     
 
@@ -128,44 +127,10 @@ public class Dog {
         this.quarantine = quarantine;
     }
 
-    //Esempio scrittura file json
-    public void WriteJSON(Dog dog) {
-
-
-            JSONObject dogDetails = new JSONObject();
-            
-            
-            dogDetails.put("name", dog.name);
-            dogDetails.put("race", dog.race);
-            dogDetails.put("color", dog.color);
-            dogDetails.put("domestic", dog.domestic);
-            dogDetails.put("age", dog.Age);
-            dogDetails.put("gender", dog.Gender);
-            dogDetails.put("size", dog.size);
-            dogDetails.put("medicalRecords", null);
-            dogDetails.put("quarantine", "No");
-
-            dogObject.put("dog", dogDetails);
-
-            //Add dog to list
-            dogList.add(dogObject);
-
-            //Write JSON file
-            try (FileWriter file = new FileWriter("dogs.json")) {
-
-                file.write(dogList.toJSONString());
-                file.flush();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        
-    }
-
-    //Json file reader method
+    @Override
     public void ReadJson() {
-
+        super.ReadJson(); //To change body of generated methods, choose Tools | Templates.
+        
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
@@ -177,7 +142,7 @@ public class Dog {
             JSONArray dogsList = (JSONArray) obj;
 
             //Iterate over dog array
-            dogsList.forEach(dog -> parseDogObject((JSONObject) dog));
+            dogsList.forEach(dog -> parseObject((JSONObject) dog));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -186,39 +151,14 @@ public class Dog {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("polydog");
     }
 
-    //Parser from json to Employee object
-    private void parseDogObject(JSONObject dog) {
-        
-        System.out.println(dog);
-
-        //Get employee object within list
-        JSONObject dogObject = (JSONObject) dog.get("dog");
-        
-       
-        //Get employee username
-        String name = (String) dogObject.get("name");
-        System.out.println(name);
-
-        String race = (String) dogObject.get("race");
-        System.out.println(race);
-
-        String size = (String) dogObject.get("size");
-        System.out.println(size);
-
-        String color = (String) dogObject.get("color");
-        System.out.println(color);
-
-        int age = Integer.parseInt(dogObject.get("age").toString());
-        System.out.println(age);
-
-        String gender = (String) dogObject.get("gender");
-        System.out.println(gender);
-        
-     
-        dogList.add((JSONObject) dog);
-        //System.out.println(dogList);
+    
+    public void WriteJSON(Dog dog) {
+        super.WriteJSON(dog); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 
 }

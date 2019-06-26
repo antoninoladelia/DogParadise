@@ -15,27 +15,28 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  *
  * @author aladelia
  */
-public class Login {
+public class Login extends JsonTools{
 
     private Employee employee = new Employee();
     private int index = 0;
 
-    private HashMap<Integer, Employee> employeeMapList = new HashMap<>();
+    private ArrayList<Employee> employeeList = new ArrayList<>();
     
-    private static Login istance=null;
+    private static Login singleton=null;
 
     private  Login() {}
     
     public static Login getIstance() {
-                if(istance==null)
-                        istance = new Login();
-                return istance;
+                if(singleton==null)
+                        singleton = new Login();
+                return singleton;
         }
 
 
@@ -44,16 +45,18 @@ public class Login {
         String username = employee.getUser();
         String password = employee.getPassword();
         this.ReadJson();
+        
+        System.out.println("login "+super.geteList());
 
         int i;
 
-        for (i = 0; i < this.employeeMapList.size(); i++) {
+        for (i = 0; i <  super.geteList().size(); i++) {
 
             
-            if (username.equals(this.employeeMapList.get(i).getUser()) && password.equals(this.employeeMapList.get(i).getPassword())) {
+            if (username.equals(super.geteList().get(i).getUser()) && password.equals(super.geteList().get(i).getPassword())) {
 
                 //prendere valore type dalla mappa
-                switch (this.employeeMapList.get(i).getTypeemployee()) {
+                switch (super.geteList().get(i).getTypeemployee()) {
                     case "admin":
                         return 0;
 
@@ -61,49 +64,19 @@ public class Login {
                         return 1;
                 }
             } else {
-                System.out.println("Error!");
+                System.out.println("User and password doesn't match!");
             }
         }
+         System.out.println("Error!");
         return -1;
     }
 
-    //Esempio scrittura file json
-    public void WriteJSON() {
-        //First Employee
-        JSONObject employeeDetails = new JSONObject();
-        employeeDetails.put("firstName", "Lokesh");
-        employeeDetails.put("lastName", "Gupta");
-        employeeDetails.put("website", "howtodoinjava.com");
 
-        JSONObject employeeObject = new JSONObject();
-        employeeObject.put("employee", employeeDetails);
-
-        //Second Employee
-        JSONObject employeeDetails2 = new JSONObject();
-        employeeDetails2.put("firstName", "Brian");
-        employeeDetails2.put("lastName", "Schultz");
-        employeeDetails2.put("website", "example.com");
-
-        JSONObject employeeObject2 = new JSONObject();
-        employeeObject2.put("employee", employeeDetails2);
-
-        //Add employees to list
-        JSONArray employeeList = new JSONArray();
-        employeeList.add(employeeObject);
-        employeeList.add(employeeObject2);
-
-        //Write JSON file
-        try (FileWriter file = new FileWriter("employees.json")) {
-
-            file.write(employeeList.toJSONString());
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+   
+    
 
     //Json file reader method
+    @Override
     public void ReadJson() {
         int i = 0;
         //JSON parser object to parse read file
@@ -117,7 +90,7 @@ public class Login {
             JSONArray employeeList = (JSONArray) obj;
 
             //Iterate over employee array
-            employeeList.forEach(emp -> parseEmployeeObject((JSONObject) emp));
+            employeeList.forEach(emp -> parseObject((JSONObject) emp));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -128,28 +101,6 @@ public class Login {
         }
     }
 
-    //Parser from json to Employee object
-    private void parseEmployeeObject(JSONObject employee) {
-
-        //Get employee object within list
-        JSONObject employeeObject = (JSONObject) employee.get("employee");
-        System.out.println(employeeObject.size());
-
-        //Get employee username
-        String username = (String) employeeObject.get("username");
-        System.out.println(username);
-
-        String password = (String) employeeObject.get("password");
-        System.out.println(password);
-
-        String typeemployee = (String) employeeObject.get("typeemployee");
-        System.out.println(typeemployee);
-
-        Employee emp = new Employee(username, password, typeemployee);
-
-        this.employeeMapList.put(index, emp);
-        index++;
-        System.out.println(this.employeeMapList);
-    }
+   
 
 }

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author aladelia
  */
-public class AdminGUI extends javax.swing.JFrame {
+public class AdminGUI extends javax.swing.JFrame   {
 
     /**
      * Creates new form AdminGUI
@@ -266,7 +266,7 @@ public class AdminGUI extends javax.swing.JFrame {
                 for (int i = 0; i < costumer.getcList().size(); i++) {
                     if (cf.equals(costumer.getcList().get(i).getFiscalcode())) {
                         System.out.println("esiste");
-                        JOptionPane.showMessageDialog(null, "Costumer Registred");
+                        JOptionPane.showMessageDialog(null, "Dog Added");
                     }else{
                         System.out.println("no costumer");
                         JOptionPane.showMessageDialog(null,"No Costumer");
