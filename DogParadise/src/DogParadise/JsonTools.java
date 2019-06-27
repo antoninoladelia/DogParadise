@@ -21,20 +21,21 @@ import org.json.simple.parser.ParseException;
  */
 public class JsonTools {
 
+    //Json objects lists
     private JSONObject dogObject = new JSONObject();
     private JSONArray dogList = new JSONArray();
     private JSONObject costumerObject = new JSONObject();
     private JSONArray costumerList = new JSONArray();
 
+    //java objects lists
     private ArrayList<Costumer> cList = new ArrayList<>();
     private ArrayList<Employee> eList = new ArrayList<>();
+    private ArrayList<Dog> dList = new ArrayList<>();
 
     public JsonTools() {
     }
 
-    public void WriteJSON() {
-        
-    }
+
     //Esempio scrittura file json
     public void WriteJSON(Dog dog) {
 
@@ -52,8 +53,12 @@ public class JsonTools {
 
         dogObject.put("dog", dogDetails);
 
-        //Add dog to list
+        //Add dog to Jsonlist
         dogList.add(dogObject);
+        
+        
+        //Add dog to ObjectList
+        this.dList.add(dog);
 
         //Write JSON file
         try (FileWriter file = new FileWriter("dogs.json")) {
@@ -82,8 +87,11 @@ public class JsonTools {
 
         costumerObject.put("costumer", costumerDetails);
 
-        //Add dog to list
+        //Add costumer to list
         costumerList.add(costumerObject);
+        
+        //add costumer ot the object list
+         this.cList.add(costumer);
 
         //Write JSON file
         try (FileWriter file = new FileWriter("costumers.json")) {
@@ -124,6 +132,8 @@ public class JsonTools {
             String color = (String) dogObject.get("color");
             System.out.println(color);
 
+            Boolean domestic = (Boolean) dogObject.get("domestic");
+
             int age = Integer.parseInt(dogObject.get("age").toString());
             System.out.println(age);
 
@@ -131,8 +141,11 @@ public class JsonTools {
             System.out.println(gender);
 
             dogList.add((JSONObject) o);
-            //System.out.println(dogList);
 
+            Dog dog = new Dog(name, race, color, domestic, age, gender, size);
+            this.dList.add(dog);
+
+            //System.out.println(dogList);
         } else if (o.containsKey("costumer")) {
             System.out.println(o);
 
@@ -160,30 +173,31 @@ public class JsonTools {
 
             String address = (String) costumerObject.get("address");
             System.out.println(address);
+            
+            costumerList.add((JSONObject) o);
+            
             Costumer c = new Costumer(name, surname, age, address, city, telephone, fiscalcode);
             this.cList.add(c);
 
-            costumerList.add((JSONObject) o);
-        }else if (o.containsKey("employee")){
+        } else if (o.containsKey("employee")) {
             //Get employee object within list
-        JSONObject employeeObject = (JSONObject) o.get("employee");
-        System.out.println(employeeObject.size());
+            JSONObject employeeObject = (JSONObject) o.get("employee");
+            System.out.println(employeeObject.size());
 
-        //Get employee username
-        String username = (String) employeeObject.get("username");
-        System.out.println(username);
+            //Get employee username
+            String username = (String) employeeObject.get("username");
+            System.out.println(username);
 
-        String password = (String) employeeObject.get("password");
-        System.out.println(password);
+            String password = (String) employeeObject.get("password");
+            System.out.println(password);
 
-        String typeemployee = (String) employeeObject.get("typeemployee");
-        System.out.println(typeemployee);
+            String typeemployee = (String) employeeObject.get("typeemployee");
+            System.out.println(typeemployee);
 
-        Employee emp = new Employee(username, password, typeemployee);
+            Employee emp = new Employee(username, password, typeemployee);
 
-        this.eList.add(emp);
-        
-        
+            this.eList.add(emp);
+
         }
 
     }

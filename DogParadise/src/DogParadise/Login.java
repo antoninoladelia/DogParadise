@@ -25,7 +25,6 @@ import java.util.HashMap;
 public class Login extends JsonTools{
 
     private Employee employee = new Employee();
-    private int index = 0;
 
     private ArrayList<Employee> employeeList = new ArrayList<>();
     
@@ -49,8 +48,9 @@ public class Login extends JsonTools{
         System.out.println("login "+super.geteList());
 
         int i;
+        int nEmployee = super.geteList().size();
 
-        for (i = 0; i <  super.geteList().size(); i++) {
+        for (i = 0; i <  nEmployee ; i++) {
 
             
             if (username.equals(super.geteList().get(i).getUser()) && password.equals(super.geteList().get(i).getPassword())) {

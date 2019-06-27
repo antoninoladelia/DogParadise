@@ -22,11 +22,6 @@ import org.json.simple.parser.ParseException;
  */
 public class Dog extends JsonTools {
 
-    private int index = 0;
-
-    
-    
-    
 
     private String name;
     private String race;

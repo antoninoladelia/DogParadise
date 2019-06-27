@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author aladelia
  */
-public class AdminGUI extends javax.swing.JFrame   {
+public class AdminGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminGUI
@@ -21,6 +21,8 @@ public class AdminGUI extends javax.swing.JFrame   {
         initComponents();
         this.jTextFieldFiscalcode.setVisible(false);
         this.jLabelFiscalCode.setVisible(false);
+        this.jButtonSearchFC.setVisible(false);
+
     }
 
     /**
@@ -51,6 +53,7 @@ public class AdminGUI extends javax.swing.JFrame   {
         jPanel1 = new javax.swing.JPanel();
         jLabelFiscalCode = new javax.swing.JLabel();
         jTextFieldFiscalcode = new javax.swing.JTextField();
+        jButtonSearchFC = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,8 +111,20 @@ public class AdminGUI extends javax.swing.JFrame   {
         });
 
         jButtonReset.setText("Reset");
+        jButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonResetMouseClicked(evt);
+            }
+        });
 
         jLabelFiscalCode.setText("Fiscal Code");
+
+        jButtonSearchFC.setText("Search");
+        jButtonSearchFC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchFCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,6 +136,9 @@ public class AdminGUI extends javax.swing.JFrame   {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldFiscalcode, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButtonSearchFC))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +147,9 @@ public class AdminGUI extends javax.swing.JFrame   {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFiscalCode)
                     .addComponent(jTextFieldFiscalcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSearchFC)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -240,12 +260,16 @@ public class AdminGUI extends javax.swing.JFrame   {
         switch (this.jComboBoxDomestic.getSelectedItem().toString()) {
             case "Yes":
                 this.jTextFieldFiscalcode.setVisible(true);
+                this.jTextFieldFiscalcode.setText("");
                 this.jLabelFiscalCode.setVisible(true);
+                this.jButtonSearchFC.setVisible(true);
                 break;
 
             case "No":
                 this.jTextFieldFiscalcode.setVisible(false);
+                this.jTextFieldFiscalcode.setText("");
                 this.jLabelFiscalCode.setVisible(false);
+                this.jButtonSearchFC.setVisible(false);
                 break;
         }
     }//GEN-LAST:event_jComboBoxDomesticItemStateChanged
@@ -260,18 +284,6 @@ public class AdminGUI extends javax.swing.JFrame   {
         switch (this.jComboBoxDomestic.getSelectedItem().toString()) {
             case "Yes":
                 domestic = true;
-                String cf = this.jTextFieldFiscalcode.getText();
-                Costumer costumer = new Costumer();
-                costumer.ReadJson();
-                for (int i = 0; i < costumer.getcList().size(); i++) {
-                    if (cf.equals(costumer.getcList().get(i).getFiscalcode())) {
-                        System.out.println("esiste");
-                        JOptionPane.showMessageDialog(null, "Dog Added");
-                    }else{
-                        System.out.println("no costumer");
-                        JOptionPane.showMessageDialog(null,"No Costumer");
-                    }
-                }
 
                 break;
             case "No":
@@ -288,10 +300,38 @@ public class AdminGUI extends javax.swing.JFrame   {
         dog.WriteJSON(dog);
     }//GEN-LAST:event_jButtonAddMouseClicked
 
+    private void jButtonResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonResetMouseClicked
+        // TODO add your handling code here:
+
+        this.jTextFieldAge.setText(null);
+        this.jTextFieldColor.setText(null);
+        this.jTextFieldFiscalcode.setText(null);
+        this.jTextFieldName.setText(null);
+        this.jTextFieldRace.setText(null);
+    }//GEN-LAST:event_jButtonResetMouseClicked
+
+    private void jButtonSearchFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchFCActionPerformed
+        // TODO add your handling code here:
+        String cf = this.jTextFieldFiscalcode.getText();
+        Costumer costumer = new Costumer();
+        costumer.ReadJson();
+
+        Boolean res = costumer.fiscalCodeResearch(cf);
+
+        if (res) {
+            JOptionPane.showMessageDialog(null, "Dog Added");
+        } else {
+            JOptionPane.showMessageDialog(null, "Client not found");
+            CostumerGUI cGui = new CostumerGUI();
+            cGui.setVisible(true);
+        }
+    }//GEN-LAST:event_jButtonSearchFCActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonReset;
+    private javax.swing.JButton jButtonSearchFC;
     private javax.swing.JComboBox<String> jComboBoxDomestic;
     private javax.swing.JComboBox<String> jComboBoxGender;
     private javax.swing.JComboBox<String> jComboBoxSize;

@@ -15,12 +15,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import DogParadise.JsonTools;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author aladelia
  */
-public class Costumer extends JsonTools{
+public class Costumer extends JsonTools {
 
     private JSONObject costumerObject = new JSONObject();
     private JSONArray costumerList = new JSONArray();
@@ -109,12 +110,27 @@ public class Costumer extends JsonTools{
         return cList;
     }
 
+    public Boolean fiscalCodeResearch(String cf) {
 
+        for (int i = 0; i <= this.cList.size(); i++) {
+            
+            if (cf.equalsIgnoreCase(this.cList.get(i).getFiscalcode())) {
+                System.out.println("esiste");
+                return true;
+            } else {
+                System.out.println("no costumer");
+    
+            }
+            
+        }
+
+        return false;
+    }
 
     @Override
     public void ReadJson() {
         super.ReadJson(); //To change body of generated methods, choose Tools | Templates.
-        
+
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
 
@@ -129,7 +145,7 @@ public class Costumer extends JsonTools{
             costumersList.forEach(costumer -> parseObject((JSONObject) costumer));
 
             this.cList = super.getcList();
-            
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -143,8 +159,5 @@ public class Costumer extends JsonTools{
     public void WriteJSON(Costumer costumer) {
         super.WriteJSON(costumer); //To change body of generated methods, choose Tools | Templates.
     }
-
-   
-    
 
 }
