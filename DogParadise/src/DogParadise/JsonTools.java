@@ -35,12 +35,12 @@ public class JsonTools {
     public JsonTools() {
     }
 
-
     //Esempio scrittura file json
     public void WriteJSON(Dog dog) {
 
         JSONObject dogDetails = new JSONObject();
 
+        dogDetails.put("id", (dList.size()));
         dogDetails.put("name", dog.getName());
         dogDetails.put("race", dog.getRace());
         dogDetails.put("color", dog.getColor());
@@ -55,8 +55,7 @@ public class JsonTools {
 
         //Add dog to Jsonlist
         dogList.add(dogObject);
-        
-        
+
         //Add dog to ObjectList
         this.dList.add(dog);
 
@@ -89,9 +88,9 @@ public class JsonTools {
 
         //Add costumer to list
         costumerList.add(costumerObject);
-        
+
         //add costumer ot the object list
-         this.cList.add(costumer);
+        this.cList.add(costumer);
 
         //Write JSON file
         try (FileWriter file = new FileWriter("costumers.json")) {
@@ -173,9 +172,9 @@ public class JsonTools {
 
             String address = (String) costumerObject.get("address");
             System.out.println(address);
-            
+
             costumerList.add((JSONObject) o);
-            
+
             Costumer c = new Costumer(name, surname, age, address, city, telephone, fiscalcode);
             this.cList.add(c);
 

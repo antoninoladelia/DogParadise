@@ -1,1 +1,143 @@
-[{"dog":{"domestic":true,"race":"aaa","color":"aaaa","gender":"Male","size":"Small","medicalRecords":null,"name":"aaaaa","quarantine":"No","age":123}},DogParadise.Dog@428f4e5a]
+[
+    
+    {
+        "dog": {
+            "domestic": false,
+            "race": "pillo",
+            "color": "pillo",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "pillo",
+            "quarantine": "No",
+            "id": 1,
+            "age": 22
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "pillo",
+            "color": "pillo",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "pillo2",
+            "quarantine": "No",
+            "id": 2,
+            "age": 22
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao",
+            "quarantine": "No",
+            "id": 3,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao3",
+            "quarantine": "No",
+            "id": 4,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao3",
+            "quarantine": "No",
+            "id": 5,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao3",
+            "quarantine": "No",
+            "id": 6,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao3",
+            "quarantine": "No",
+            "id": 7,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao3",
+            "quarantine": "No",
+            "id": 8,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "ciao",
+            "color": "22",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao3",
+            "quarantine": "No",
+            "id": 9,
+            "age": 33
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "",
+            "color": "",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "",
+            "quarantine": "No",
+            "id": 10,
+            "age": 2342342
+        }
+    }
+]
