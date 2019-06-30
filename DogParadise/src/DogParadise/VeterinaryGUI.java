@@ -5,17 +5,45 @@
  */
 package DogParadise;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author aladelia
  */
 public class VeterinaryGUI extends javax.swing.JFrame {
 
+    private ArrayList<Dog> dList = new ArrayList<>();
+    private Dog dog = new Dog();
+    private int idDog;
+    private ArrayList<MedicalRecords> mrList = new ArrayList<>();
+    
+    
+
     /**
      * Creates new form Veterinary
      */
     public VeterinaryGUI() {
+
         initComponents();
+      
+        this.dogNameLabel.setVisible(false);
+        this.dogRaceLabel.setVisible(false);
+        this.dogColorLabel.setVisible(false);
+        this.dogDomesticLabel.setVisible(false);
+        this.dogAgeLabel.setVisible(false);
+        this.dogGenderLabel.setVisible(false);
+        this.dogSizeLabel.setVisible(false);
+        this.jTextArea1.setVisible(false);
+        
     }
 
     /**
@@ -27,24 +55,312 @@ public class VeterinaryGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        SearchDogjButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldDog = new javax.swing.JTextField();
+        dogNameLabel = new javax.swing.JLabel();
+        dogRaceLabel = new javax.swing.JLabel();
+        dogColorLabel = new javax.swing.JLabel();
+        dogDomesticLabel = new javax.swing.JLabel();
+        dogAgeLabel = new javax.swing.JLabel();
+        dogGenderLabel = new javax.swing.JLabel();
+        dogSizeLabel = new javax.swing.JLabel();
+        AddMedicaljButtonCreate = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Vet gui");
+
+        SearchDogjButton.setText("Search");
+        SearchDogjButton.setActionCommand("jButtonMedical");
+        SearchDogjButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SearchDogjButtonMouseClicked(evt);
+            }
+        });
+        SearchDogjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchDogjButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Dog");
+
+        dogNameLabel.setText("dogNameLabel");
+
+        dogRaceLabel.setText("dogRaceLabel");
+
+        dogColorLabel.setText("dogColorLabel");
+
+        dogDomesticLabel.setText("dogDomesticLabel");
+
+        dogAgeLabel.setText("dogAgeLabel");
+
+        dogGenderLabel.setText("dogGenderLabel");
+
+        dogSizeLabel.setText("dogSizeLabel");
+
+        AddMedicaljButtonCreate.setText("Add Medical Record");
+        AddMedicaljButtonCreate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddMedicaljButtonCreateMouseClicked(evt);
+            }
+        });
+        AddMedicaljButtonCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddMedicaljButtonCreateActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dogSizeLabel)
+                    .addComponent(dogGenderLabel)
+                    .addComponent(dogAgeLabel)
+                    .addComponent(dogDomesticLabel)
+                    .addComponent(dogColorLabel)
+                    .addComponent(dogRaceLabel)
+                    .addComponent(dogNameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(AddMedicaljButtonCreate)))
+                        .addGap(186, 186, 186)
+                        .addComponent(SearchDogjButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addGap(28, 28, 28)
+                        .addComponent(jTextFieldDog, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldDog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(dogNameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dogRaceLabel)
+                        .addGap(12, 12, 12)
+                        .addComponent(dogColorLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dogDomesticLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dogAgeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dogGenderLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dogSizeLabel))
+                    .addComponent(jScrollPane1))
+                .addGap(192, 192, 192)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SearchDogjButton)
+                    .addComponent(AddMedicaljButtonCreate))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void SearchDogjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchDogjButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchDogjButtonActionPerformed
+
+    private void SearchDogjButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchDogjButtonMouseClicked
+
+
+            idDog = Integer.parseInt(this.jTextFieldDog.getText());
+            
+            MedicalRecords medicalrecords = new MedicalRecords();
+            medicalrecords.ReadJson();
+
+            this.dList = medicalrecords.getdList();
+            System.out.println("siamo in vet\n");
+            System.out.println(this.dList.get(idDog).getName());
+
+            //this.idLabel.setText(Integer.toString(id));
+            //DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            //this.dateLabel.setText(dateFormat.format(date));
+            this.dogNameLabel.setText(this.dList.get(idDog).getName());
+            this.dogRaceLabel.setText(this.dList.get(idDog).getRace());
+            this.dogColorLabel.setText(this.dList.get(idDog).getColor());
+            this.dogDomesticLabel.setText(Boolean.toString(this.dList.get(idDog).getDomestic()));
+            this.dogAgeLabel.setText(Integer.toString(this.dList.get(idDog).getAge()));
+            this.dogGenderLabel.setText(this.dList.get(idDog).getGender());
+            this.dogSizeLabel.setText(this.dList.get(idDog).getSize());
+            
+            if(this.dList.get(idDog).getMrList()!=null){
+            String medicalprint= "";
+                for (int i=0; i<this.dList.get(idDog).getMrList().size(); i++){
+            
+                    int id = this.dList.get(idDog).getMrList().get(i).getId();
+                    String date = this.dList.get(idDog).getMrList().get(i).getCreationdate();
+                    medicalprint = medicalprint + "id medical:" + id + "   " +  "date:" + date +"\n";
+            
+                }
+                this.jTextArea1.setText(medicalprint);
+            }else{
+                
+                this.jTextArea1.setText("no medical records for this dog");
+            }
+            
+            
+            
+
+            String name = this.dList.get(idDog).getName();
+            String race = this.dList.get(idDog).getRace();
+            String color = this.dList.get(idDog).getColor();
+            Boolean domestic = this.dList.get(idDog).getDomestic();
+            int age = this.dList.get(idDog).getAge();
+            String gender = this.dList.get(idDog).getGender();
+            String size = this.dList.get(idDog).getSize();
+                            
+            this.dogNameLabel.setVisible(true);
+            this.dogRaceLabel.setVisible(true);
+            this.dogColorLabel.setVisible(true);
+            this.dogDomesticLabel.setVisible(true);
+            this.dogAgeLabel.setVisible(true);
+            this.dogGenderLabel.setVisible(true);
+            this.dogSizeLabel.setVisible(true);
+            this.jTextArea1.setVisible(true);
+
+            
+            dog.setName(name);
+            dog.setRace(race);
+            dog.setColor(color);
+            dog.setDomestic(domestic);
+            dog.setAge(age);
+            dog.setGender(gender);
+            dog.setSize(size);
+            
+            // TODO add your handling code here:
+        
+    }//GEN-LAST:event_SearchDogjButtonMouseClicked
+
+    private void AddMedicaljButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMedicaljButtonCreateActionPerformed
+
+           
+            
+            //aggiunta cartella clinica
+            
+            MedicalRecordsGUI medicalrecordsgui = new MedicalRecordsGUI();
+            medicalrecordsgui.setVisible(true);
+            
+            
+            medicalrecordsgui.getCreateMedicaljButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                
+                        ArrayList<MedicalRecords> tempmrList = new ArrayList<>();
+                        int id = Integer.parseInt(medicalrecordsgui.getIdjTextField().getText());
+                        String date = medicalrecordsgui.getDatejTextField().getText();
+                        
+                        
+                        MedicalRecords medicalrecords = new MedicalRecords();
+                        medicalrecords.ReadJson();
+                        
+                        
+                        
+                        if(dList.get(idDog).getMrList() != null){
+                          
+                      
+                            
+                            for(int i=0; i<dList.get(idDog).getMrList().size();i++){
+                               
+                                MedicalRecords medicalrecords1 = new MedicalRecords();
+                                medicalrecords1.setId(dList.get(idDog).getMrList().get(i).getId());
+                                medicalrecords1.setCreationdate(dList.get(idDog).getMrList().get(i).getCreationdate());
+                                tempmrList.add(medicalrecords1);
+                            
+                            
+                            }
+                            
+                            
+                        }
+                                
+                                
+                        medicalrecords.setId(id);
+                        medicalrecords.setCreationdate(date);
+                        System.out.println(medicalrecords.getId());
+                        System.out.println(medicalrecords.getCreationdate());
+                        
+                        
+                        
+                        
+                        mrList.add(medicalrecords);
+                        
+                        for(int i=0; i<mrList.size();i++)
+                            tempmrList.add(mrList.get(i));
+                        
+                        
+                        
+                        dog.setMrList(tempmrList);
+                        
+                        
+                        
+                        
+                        medicalrecords.WriteJSON(dog, idDog);
+                        
+                        
+                    
+                
+                }
+            });
+            
+            
+            // TODO add your handling code here:
+        
+    }//GEN-LAST:event_AddMedicaljButtonCreateActionPerformed
+
+    private void AddMedicaljButtonCreateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMedicaljButtonCreateMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddMedicaljButtonCreateMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddMedicaljButtonCreate;
+    private javax.swing.JButton SearchDogjButton;
+    private javax.swing.JLabel dogAgeLabel;
+    private javax.swing.JLabel dogColorLabel;
+    private javax.swing.JLabel dogDomesticLabel;
+    private javax.swing.JLabel dogGenderLabel;
+    private javax.swing.JLabel dogNameLabel;
+    private javax.swing.JLabel dogRaceLabel;
+    private javax.swing.JLabel dogSizeLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextFieldDog;
     // End of variables declaration//GEN-END:variables
 }

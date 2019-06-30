@@ -5,13 +5,28 @@
  */
 package DogParadise;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
  * @author aladelia
  */
-public class Dog {
+public class Dog extends JsonTools {
+
+    private int index = 0;
+
+    
+    
+    
 
     private String name;
     private String race;
@@ -20,16 +35,38 @@ public class Dog {
     private int Age;
     private String Gender;
     private String size;
-    private ArrayList<MedicalRecords> medicalrecords = new ArrayList<>();
+    private ArrayList<MedicalRecords> mrList = new ArrayList<>();
     private Boolean quarantine = false;
+    private ArrayList<Dog> dList = new ArrayList<>();
 
-    public Dog(String name, String race, String color, int Age, String Gender, String size) {
+    public Dog() {
+
+    }
+
+    public Dog(String name, String race, String color,Boolean domestic, int Age, String Gender, String size) {
+
         this.name = name;
         this.race = race;
         this.color = color;
+        this.domestic= domestic;
         this.Age = Age;
         this.Gender = Gender;
         this.size = size;
+        this.mrList = null;
+        this.quarantine = false;
+    }
+    
+    public Dog(String name, String race, String color,Boolean domestic, int Age, String Gender, String size, ArrayList<MedicalRecords> mrList) {
+
+        this.name = name;
+        this.race = race;
+        this.color = color;
+        this.domestic= domestic;
+        this.Age = Age;
+        this.Gender = Gender;
+        this.size = size;
+        this.mrList = mrList;
+        this.quarantine = false;
     }
 
     public String getName() {
@@ -88,12 +125,12 @@ public class Dog {
         this.size = size;
     }
 
-    public ArrayList<MedicalRecords> getMedicalrecords() {
-        return medicalrecords;
+    public ArrayList<MedicalRecords> getMrList() {
+        return mrList;
     }
 
-    public void setMedicalrecords(ArrayList<MedicalRecords> medicalrecords) {
-        this.medicalrecords = medicalrecords;
+    public void setMrList(ArrayList<MedicalRecords> mrList) {
+        this.mrList = mrList;
     }
 
     public Boolean getQuarantine() {
@@ -103,5 +140,55 @@ public class Dog {
     public void setQuarantine(Boolean quarantine) {
         this.quarantine = quarantine;
     }
+
+    public ArrayList<Dog> getdList() {
+        return dList;
+    }
+    
+    
+
+    @Override
+    public void ReadJson() {
+        super.ReadJson(); //To change body of generated methods, choose Tools | Templates.
+        
+        //JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("dogs.json")) {
+
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+            
+            System.out.println("lol");
+            JSONArray dogsList = (JSONArray) obj;
+            
+            
+
+            //Iterate over dog array
+            dogsList.forEach(dog -> parseObject((JSONObject) dog));
+            
+            this.dList = super.getdList();
+            
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println("polydog");
+    }
+
+    
+    public void WriteJSON(Dog dog) {
+        super.WriteJSON(dog); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void WriteJSON(Dog dog, int index) {
+        super.WriteJSON(dog, index); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 
 }

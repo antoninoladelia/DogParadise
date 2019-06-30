@@ -1,0 +1,17 @@
+[
+    {
+        "employee": {
+            "username": "aladelia",
+            "password": "qazwsx",
+            "typeemployee":"admin"
+            
+        }
+    },
+    {
+        "employee": {
+            "username": "amonciino",
+            "password": "qazwsx",
+            "typeemployee":"vet"
+        }
+    }
+]
