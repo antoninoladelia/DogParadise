@@ -32,12 +32,13 @@ public class Dog extends JsonTools {
     private String size;
     private ArrayList<MedicalRecords> medicalrecords = new ArrayList<>();
     private Boolean quarantine = false;
+    private Costumer releaser = null;
 
     public Dog() {
 
     }
 
-    public Dog(String name, String race, String color,Boolean domestic, int Age, String Gender, String size) {
+    public Dog(String name, String race, String color,Boolean domestic, int Age, String Gender, String size ,Costumer releaser) {
 
         this.name = name;
         this.race = race;
@@ -48,6 +49,15 @@ public class Dog extends JsonTools {
         this.size = size;
         this.medicalrecords = null;
         this.quarantine = false;
+        this.releaser = releaser;
+    }
+
+    public Costumer getReleaser() {
+        return releaser;
+    }
+
+    public void setReleaser(Costumer releaser) {
+        this.releaser = releaser;
     }
 
     public String getName() {

@@ -71,6 +71,11 @@ public class CostumerGUI extends javax.swing.JFrame {
                 jButtonRegisterMouseClicked(evt);
             }
         });
+        jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,22 +151,17 @@ public class CostumerGUI extends javax.swing.JFrame {
 
     private void jButtonRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRegisterMouseClicked
         // TODO add your handling code here:
-        String name = this.jTextFieldName.getText();
-        String surname = this.jTextFieldSurname.getText();
-        int age = Integer.parseInt((this.jTextFieldAge.getText()));
-        String city = this.jTextFieldCity.getText();
-        String address = this.jTextFieldAddress.getText();
-        String telephone = this.jTextFieldTelephone.getText();
-        String fiscalCode = this.jTextFieldFiscalCode.getText();
         
-        Costumer costumer = new Costumer(name, surname, age, address, city, telephone, fiscalCode);
         
-        costumer.ReadJson();
-        costumer.WriteJSON(costumer);
+
         
 
 
     }//GEN-LAST:event_jButtonRegisterMouseClicked
+
+    private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonRegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

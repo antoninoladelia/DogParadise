@@ -75,14 +75,24 @@ public class JsonTools {
     public void WriteJSON(Costumer costumer) {
 
         JSONObject costumerDetails = new JSONObject();
+        JSONObject documentDetails = new JSONObject();
+
+        documentDetails.put("type", costumer.getDocument().getType());
+        documentDetails.put("nDocument", costumer.getDocument().getnDocument());
+        documentDetails.put("ExpiryDate", costumer.getDocument().getDateExpiry());
+
+        System.out.println("dco " + documentDetails);
 
         costumerDetails.put("name", costumer.getName());
         costumerDetails.put("surname", costumer.getSurname());
-        costumerDetails.put("age", costumer.getAge());
+        costumerDetails.put("dateOfBirth", costumer.getDateOfBirth());
+        costumerDetails.put("cityOfBirth", costumer.getCityOfBirth());
+        costumerDetails.put("cityOfResidence", costumer.getCityOfResidence());
         costumerDetails.put("address", costumer.getAddress());
-        costumerDetails.put("city", costumer.getCity());
         costumerDetails.put("telephone", costumer.getTelephone());
-        costumerDetails.put("fiscalcode", costumer.getFiscalcode());
+        costumerDetails.put("fiscalCode", costumer.getFiscalCode());
+        costumerDetails.put("province", costumer.getProvince());
+        costumerDetails.put("document", documentDetails);
 
         costumerObject.put("costumer", costumerDetails);
 
@@ -141,8 +151,8 @@ public class JsonTools {
 
             dogList.add((JSONObject) o);
 
-            Dog dog = new Dog(name, race, color, domestic, age, gender, size);
-            this.dList.add(dog);
+            //Dog dog = new Dog(name, race, color, domestic, age, gender, size);
+            //this.dList.add(dog);
 
             //System.out.println(dogList);
         } else if (o.containsKey("costumer")) {
@@ -158,24 +168,41 @@ public class JsonTools {
             String surname = (String) costumerObject.get("surname");
             System.out.println(surname);
 
+            String cityOfBirth = (String) costumerObject.get("cityOfBirth");
+            System.out.println(cityOfBirth);
+
+            String cityOfResidence = (String) costumerObject.get("cityOfResidence");
+            System.out.println(cityOfResidence);
+
             String telephone = (String) costumerObject.get("telephone");
             System.out.println(telephone);
-
-            String city = (String) costumerObject.get("city");
-            System.out.println(city);
-
-            int age = Integer.parseInt(costumerObject.get("age").toString());
-            System.out.println(age);
-
-            String fiscalcode = (String) costumerObject.get("fiscalcode");
-            System.out.println(fiscalcode);
 
             String address = (String) costumerObject.get("address");
             System.out.println(address);
 
+            String province = (String) costumerObject.get("province");
+            System.out.println(province);
+
+            String fiscalcode = (String) costumerObject.get("fiscalCode");
+            System.out.println(fiscalcode);
+
+//getting the document JsonObject            
+            JSONObject doc = (JSONObject) costumerObject.get("document");
+            String type = (String) doc.get("type");
+            System.out.println(type);
+
+            String nDocument = (String) doc.get("nDocument");
+            System.out.println(nDocument);
+
+            String ExpiryDate = (String) doc.get("ExpiryDate");
+            System.out.println(ExpiryDate);
+
+            IdDocument document = new IdDocument(type, nDocument, ExpiryDate);
+
+            Costumer c = new Costumer(name, surname, cityOfBirth, cityOfBirth, cityOfResidence, address, telephone, fiscalcode, province, document);
+
             costumerList.add((JSONObject) o);
 
-            Costumer c = new Costumer(name, surname, age, address, city, telephone, fiscalcode);
             this.cList.add(c);
 
         } else if (o.containsKey("employee")) {

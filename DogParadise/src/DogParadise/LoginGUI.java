@@ -5,16 +5,41 @@
  */
 package DogParadise;
 
+import DogParadise.Database.DaoImplementation;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.bson.Document;
+
 /**
  *
  * @author aladelia
  */
 public class LoginGUI extends javax.swing.JFrame {
 
+    private  DaoImplementation db= null;
+    private  Login  login= null;
+    
     /**
      * Creates new form Login
      */
-    public LoginGUI() {
+    public LoginGUI() throws UnknownHostException {
+        
+        /*Document docAdmin = new Document("username","aladelia")
+                    .append("password", "qazwsx")
+                    .append("typeemployee", "admin");
+        
+        Document docVet = new Document("username","amonciino")
+                    .append("password", "qazwsx")
+                    .append("typeemployee", "vet");*/
+        this.db = DaoImplementation.getInstance();
+        
+        //this.db.createTable("Employee");
+        
+        //this.db.saveToDB("Employee", docAdmin);
+        //this.db.saveToDB("Employee", docVet);
+
+        
         initComponents();
     }
 
@@ -104,35 +129,42 @@ public class LoginGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldPasswordActionPerformed
 
     private void jToggleButtonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonLoginMouseClicked
-        // TODO add your handling code here:
-        String username = jTextFieldUsername.getText();
-        String password = jTextFieldPassword.getText();
-        System.out.println(username+" "+password);
-        
-        Employee employee = new Employee(username,password);
-        
-        Login  login = Login.getIstance();
-        int typeGUI = login.checkLogin(employee);
-        
-        switch(typeGUI){
-            case 0:
-                AdminGUI adminGui = new AdminGUI();
-                adminGui.setVisible(true);
-                this.setVisible(false);
-                //chiama interfaccia admin
-                break;
-            case 1: 
-                VeterinaryGUI vetGui = new VeterinaryGUI();
-                vetGui.setVisible(true);
-                this.setVisible(false);
-                //chiama interfaccia vet
-                break;
-                
-            case -1:
-                //errore
-                break;
-            default:
-                break;
+        try {
+            // TODO add your handling code here:
+            String username = jTextFieldUsername.getText();
+            String password = jTextFieldPassword.getText();
+            System.out.println(username+" "+password);
+            
+            Document doc = db.findADocument("Employee", "username", username);
+            System.out.println(doc);
+            
+            Employee employee = new Employee(username,password);
+            
+            login = Login.getIstance();
+            int typeGUI = login.checkLogin(employee, doc);
+            
+            switch(typeGUI){
+                case 0:
+                    AdminGUI adminGui = new AdminGUI();
+                    adminGui.setVisible(true);
+                    this.setVisible(false);
+                    //chiama interfaccia admin
+                    break;
+                case 1:
+                    VeterinaryGUI vetGui = new VeterinaryGUI();
+                    vetGui.setVisible(true);
+                    this.setVisible(false);
+                    //chiama interfaccia vet
+                    break;
+                    
+                case -1:
+                    //errore
+                    break;
+                default:
+                    break;
+            }
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
     }//GEN-LAST:event_jToggleButtonLoginMouseClicked
@@ -172,7 +204,11 @@ public class LoginGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginGUI().setVisible(true);
+                try {
+                    new LoginGUI().setVisible(true);
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

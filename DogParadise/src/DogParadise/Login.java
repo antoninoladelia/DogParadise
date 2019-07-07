@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.bson.Document;
 
 /**
  *
@@ -39,7 +40,7 @@ public class Login extends JsonTools{
         }
 
 
-    public int checkLogin(Employee employee) {
+    public int checkLogin(Employee employee, Document doc) {
         
         String username = employee.getUser();
         String password = employee.getPassword();
@@ -48,7 +49,7 @@ public class Login extends JsonTools{
         System.out.println("login "+super.geteList());
 
         int i;
-        int nEmployee = super.geteList().size();
+        /*int nEmployee = super.geteList().size();
 
         for (i = 0; i <  nEmployee ; i++) {
 
@@ -68,7 +69,22 @@ public class Login extends JsonTools{
             }
         }
          System.out.println("Error!");
+        return -1;*/
+        
+        
+        if(doc.getString("username").equals(username) && doc.getString("password").equals(password)){
+            switch (doc.getString("typeemployee")) {
+                    case "admin":
+                        return 0;
+
+                    case "vet":
+                        return 1;
+                }
+        }else {
+                System.out.println("User and password doesn't match!");
+            }
         return -1;
+        
     }
 
 

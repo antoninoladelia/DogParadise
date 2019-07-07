@@ -1,5 +1,4 @@
 [
-    
     {
         "dog": {
             "domestic": false,
@@ -138,6 +137,20 @@
             "quarantine": "No",
             "id": 10,
             "age": 2342342
+        }
+    },
+    {
+        "dog": {
+            "domestic": false,
+            "race": "qwe",
+            "color": "qwe",
+            "gender": "Male",
+            "size": "Small",
+            "medicalRecords": null,
+            "name": "ciao",
+            "quarantine": "No",
+            "id": 10,
+            "age": 22
         }
     }
 ]
