@@ -5,17 +5,9 @@
  */
 package DogParadise;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import DogParadise.JsonTools;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -183,38 +175,6 @@ public class Costumer {
 
         return false;
     }
-/*
-    @Override
-    public void ReadJson() {
-        super.ReadJson(); //To change body of generated methods, choose Tools | Templates.
 
-        //JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("costumers.json")) {
-
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-
-            JSONArray costumersList = (JSONArray) obj;
-
-            //Iterate over dog array
-            costumersList.forEach(costumer -> parseObject((JSONObject) costumer));
-
-            this.cList = super.getcList();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void WriteJSON(Costumer costumer) {
-        super.WriteJSON(costumer); //To change body of generated methods, choose Tools | Templates.
-    }*/
 
 }

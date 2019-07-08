@@ -5,6 +5,7 @@
  */
 package DogParadise;
 
+import DogParadise.Database.Dao;
 import DogParadise.Database.DaoImplementation;
 import com.google.gson.Gson;
 import java.net.UnknownHostException;
@@ -17,7 +18,7 @@ import org.bson.Document;
  */
 public class AdminGUI extends javax.swing.JFrame {
 
-    private final DaoImplementation db;
+    private final Dao db;
     private final Gson gson = new Gson();
     private Costumer costumer = null;
     private Dog dog = null;
@@ -183,6 +184,11 @@ public class AdminGUI extends javax.swing.JFrame {
         jButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButtonAddMouseClicked(evt);
+            }
+        });
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
             }
         });
 
@@ -556,64 +562,59 @@ public class AdminGUI extends javax.swing.JFrame {
 
     private void jButtonAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddMouseClicked
         // TODO add your handling code here:
-            String name = this.jTextFieldName.getText();
-            String race = this.jTextFieldRace.getText();
-            String color = this.jTextFieldColor.getText();
-            Document releaser = new Document();
-            Boolean domestic = null;
-            
-            switch (this.jComboBoxDomestic.getSelectedItem().toString()) {
-                case "Yes":
-                    domestic = true;
-                    releaser = this.db.findADocument("Costumer", "fiscalCode", this.jTextFieldFiscalcode.getText());
-                    
-                    IdDocument idDoc= gson.fromJson(releaser.get("document").toString(),  IdDocument.class);
-                    
-                     costumer = new Costumer(
-                    releaser.getString("name"),
-                    releaser.getString("surname"),
-                    releaser.getString("dateOfBirth"),
-                    releaser.getString("cityOfBirth"),
-                    releaser.getString("cityOfResidence"),
-                    releaser.getString("address"),
-                    releaser.getString("telephone"),
-                    releaser.getString("fiscalCode"),
-                    releaser.getString("province"), 
-                    idDoc);
-                                         
-                    break;
-                case "No":
-                    domestic = false;
-                    releaser = null;
-                    break;
-            }
+        String name = this.jTextFieldName.getText();
+        String race = this.jTextFieldRace.getText();
+        String color = this.jTextFieldColor.getText();
+        Document releaser = new Document();
+        Boolean domestic = null;
 
-            int age = Integer.parseInt(this.jTextFieldAge.getText());
+        switch (this.jComboBoxDomestic.getSelectedItem().toString()) {
+            case "Yes":
+                domestic = true;
+                releaser = this.db.findADocument("Costumer", "fiscalCode", this.jTextFieldFiscalcode.getText());
 
-            String gender = this.jComboBoxGender.getSelectedItem().toString();
-            String size = this.jComboBoxSize.getSelectedItem().toString();
-            
-            
-            
+                IdDocument idDoc = gson.fromJson(releaser.get("document").toString(), IdDocument.class);
 
-             dog = new Dog(name, race, color, domestic, age, gender, size,costumer);
+                costumer = new Costumer(
+                        releaser.getString("name"),
+                        releaser.getString("surname"),
+                        releaser.getString("dateOfBirth"),
+                        releaser.getString("cityOfBirth"),
+                        releaser.getString("cityOfResidence"),
+                        releaser.getString("address"),
+                        releaser.getString("telephone"),
+                        releaser.getString("fiscalCode"),
+                        releaser.getString("province"),
+                        idDoc);
 
-            Document doc = new Document("name", dog.getName())
-                    .append("race", dog.getRace())
-                    .append("color", dog.getColor())
-                    .append("domestic", dog.getDomestic())
-                    .append("age", dog.getAge())
-                    .append("gender", dog.getGender())
-                    .append("size", dog.getSize())
-                    .append("releaser", releaser);
+                break;
+            case "No":
+                domestic = false;
+                releaser = null;
+                break;
+        }
 
-            this.db.createTable("Dog");
-            this.db.saveToDB("Dog", doc);
-            JOptionPane.showMessageDialog(null, "Dog Added");
-        
+        int age = Integer.parseInt(this.jTextFieldAge.getText());
 
-        //dog.ReadJson();
-        //dog.WriteJSON(dog);
+        String gender = this.jComboBoxGender.getSelectedItem().toString();
+        String size = this.jComboBoxSize.getSelectedItem().toString();
+
+        dog = new Dog(name, race, color, domestic, age, gender, size, costumer);
+
+        Document doc = new Document("name", dog.getName())
+                .append("race", dog.getRace())
+                .append("color", dog.getColor())
+                .append("domestic", dog.getDomestic())
+                .append("age", dog.getAge())
+                .append("gender", dog.getGender())
+                .append("size", dog.getSize())
+                .append("releaser", releaser);
+
+        this.db.createTable("Dog");
+        this.db.saveToDB("Dog", doc);
+        JOptionPane.showMessageDialog(null, "Dog Added");
+        this.clearDogFields();
+
     }//GEN-LAST:event_jButtonAddMouseClicked
 
     private void jButtonSearchFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchFCActionPerformed
@@ -621,7 +622,6 @@ public class AdminGUI extends javax.swing.JFrame {
         String cf = this.jTextFieldFiscalcode.getText();
 
         //costumer.ReadJson();
-
         Boolean res = this.db.checkExistingFieldInDb("Costumer", "fiscalCode", cf);
 
         this.db.findADocument("Costumer", "fiscalCode", cf);
@@ -638,12 +638,7 @@ public class AdminGUI extends javax.swing.JFrame {
 
     private void jButtonResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonResetMouseClicked
         // TODO add your handling code here:
-
-        this.jTextFieldAge.setText(null);
-        this.jTextFieldColor.setText(null);
-        this.jTextFieldFiscalcode.setText(null);
-        this.jTextFieldName.setText(null);
-        this.jTextFieldRace.setText(null);
+        this.clearDogFields();
     }//GEN-LAST:event_jButtonResetMouseClicked
 
     private void jTextFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActionPerformed
@@ -678,8 +673,7 @@ public class AdminGUI extends javax.swing.JFrame {
 
         costumer = new Costumer(name, surname, dateOfBirth, cityOfBirth, cityOfResidence, address, telephone, fiscalCode, province, idDocument);
 
-        // costumer.ReadJson();
-        //costumer.WriteJSON(costumer);
+        
         Document doc = new Document("name", costumer.getName())
                 .append("surname", costumer.getSurname())
                 .append("date of birth", costumer.getDateOfBirth())
@@ -693,6 +687,8 @@ public class AdminGUI extends javax.swing.JFrame {
 
         this.db.createTable("Costumer");
         this.db.saveToDB("Costumer", doc);
+
+        this.clearCostumerFields();
 
 
     }//GEN-LAST:event_jButtonSaveActionPerformed
@@ -714,6 +710,33 @@ public class AdminGUI extends javax.swing.JFrame {
 
         this.jTabbedPane.setSelectedIndex(0);
     }//GEN-LAST:event_jButtonCostumerClearActionPerformed
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void clearCostumerFields() {
+        this.jTextFieldCostumerName.setText(null);
+        this.jTextFieldCostumerSurname.setText(null);
+        this.jTextFieldCostumerDateofBirth.setText(null);
+        this.jTextFieldCostumerCityofBirth.setText(null);
+        this.jTextFieldCostumerCityofResidence.setText(null);
+        this.jTextFieldCostumerAddress.setText(null);
+        this.jTextFieldCostumerTelephone.setText(null);
+        this.jTextFieldCostumerFiscalCode.setText(null);
+        this.jTextFieldCostumerProvince.setText(null);
+
+        this.jTextFieldDocumentNumber.setText(null);
+        this.jTextFieldExpiryDate.setText(null);
+    }
+
+    private void clearDogFields() {
+        this.jTextFieldAge.setText(null);
+        this.jTextFieldColor.setText(null);
+        this.jTextFieldFiscalcode.setText(null);
+        this.jTextFieldName.setText(null);
+        this.jTextFieldRace.setText(null);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

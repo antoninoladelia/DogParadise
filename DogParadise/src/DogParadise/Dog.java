@@ -5,22 +5,13 @@
  */
 package DogParadise;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
  * @author aladelia
  */
-public class Dog extends JsonTools {
+public class Dog {
 
 
     private String name;
@@ -131,39 +122,6 @@ public class Dog extends JsonTools {
     public void setQuarantine(Boolean quarantine) {
         this.quarantine = quarantine;
     }
-
-    @Override
-    public void ReadJson() {
-        super.ReadJson(); //To change body of generated methods, choose Tools | Templates.
-        
-        //JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("dogs.json")) {
-
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-
-            JSONArray dogsList = (JSONArray) obj;
-
-            //Iterate over dog array
-            dogsList.forEach(dog -> parseObject((JSONObject) dog));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println("polydog");
-    }
-
-    
-    public void WriteJSON(Dog dog) {
-        super.WriteJSON(dog); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+   
 
 }

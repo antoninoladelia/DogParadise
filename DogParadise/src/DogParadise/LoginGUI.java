@@ -5,6 +5,7 @@
  */
 package DogParadise;
 
+import DogParadise.Database.Dao;
 import DogParadise.Database.DaoImplementation;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -17,7 +18,7 @@ import org.bson.Document;
  */
 public class LoginGUI extends javax.swing.JFrame {
 
-    private  DaoImplementation db= null;
+    private  Dao db= null;
     private  Login  login= null;
     
     /**
