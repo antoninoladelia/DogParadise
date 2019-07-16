@@ -26,6 +26,8 @@ import org.bson.Document;
 public class Login {
 
     private Employee employee = new Employee();
+    
+    private Costumer costumer = new Costumer();
 
     private ArrayList<Employee> employeeList = new ArrayList<>();
 
@@ -41,10 +43,14 @@ public class Login {
         return singleton;
     }
 
-    public int checkLogin(Employee employee, Document doc) {
+    public int checkLoginEmployee(Employee employee, Document doc) {
 
-        String username = employee.getUser();
-        String password = employee.getPassword();
+        this.employee = employee;
+        this.employee = employee;
+        
+        
+        String username = this.employee.getUser();
+        String password = this.employee.getPassword();
 
         if (doc.getString("username").equals(username) && doc.getString("password").equals(password)) {
             switch (doc.getString("typeemployee")) {
@@ -54,6 +60,24 @@ public class Login {
                 case "vet":
                     return 1;
             }
+        } else {
+            System.out.println("User and password doesn't match!");
+        }
+        return -1;
+
+    }
+    
+    
+    public int checkLoginCostumer(Costumer costumer, Document doc) {
+
+        this.costumer = costumer;
+        this.costumer = costumer;
+        
+        String username = this.costumer.getFiscalCode();
+        String password = this.costumer.getPassword();
+
+        if (doc.getString("fiscalCode").equals(username) && doc.getString("password").equals(password)) {
+            return 0;
         } else {
             System.out.println("User and password doesn't match!");
         }

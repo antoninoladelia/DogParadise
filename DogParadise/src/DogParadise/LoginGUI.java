@@ -10,6 +10,7 @@ import DogParadise.Database.DaoImplementation;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.bson.Document;
 
 /**
@@ -18,14 +19,14 @@ import org.bson.Document;
  */
 public class LoginGUI extends javax.swing.JFrame {
 
-    private  Dao db= null;
-    private  Login  login= null;
-    
+    private Dao db = null;
+    private Login login = null;
+
     /**
      * Creates new form Login
      */
     public LoginGUI() throws UnknownHostException {
-        
+
         /*Document docAdmin = new Document("username","aladelia")
                     .append("password", "qazwsx")
                     .append("typeemployee", "admin");
@@ -34,13 +35,10 @@ public class LoginGUI extends javax.swing.JFrame {
                     .append("password", "qazwsx")
                     .append("typeemployee", "vet");*/
         this.db = DaoImplementation.getInstance();
-        
+
         //this.db.createTable("Employee");
-        
         //this.db.saveToDB("Employee", docAdmin);
         //this.db.saveToDB("Employee", docVet);
-
-        
         initComponents();
     }
 
@@ -58,6 +56,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jLabelUsername = new javax.swing.JLabel();
         jLabelPassword = new javax.swing.JLabel();
         jTextFieldUsername = new javax.swing.JTextField();
+        jComboBoxTypeUser = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,6 +85,8 @@ public class LoginGUI extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxTypeUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "Costumer" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,11 +106,17 @@ public class LoginGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(81, 81, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBoxTypeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jComboBoxTypeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelUsername)
                     .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -133,41 +140,66 @@ public class LoginGUI extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             String username = jTextFieldUsername.getText();
-            String password = jTextFieldPassword.getText();
-            System.out.println(username+" "+password);
-            
-            Document doc = db.findADocument("Employee", "username", username);
-            System.out.println(doc);
-            
-            Employee employee = new Employee(username,password);
-            
+            String password = jTextFieldPassword.getText().toString();
+            System.out.println(username + " " + password);
+
             login = Login.getIstance();
-            int typeGUI = login.checkLogin(employee, doc);
-            
-            switch(typeGUI){
-                case 0:
-                    AdminGUI adminGui = new AdminGUI();
-                    adminGui.setVisible(true);
-                    this.setVisible(false);
-                    //chiama interfaccia admin
+            Document doc;
+
+            switch ((this.jComboBoxTypeUser.getSelectedItem().toString())) {
+                case "Employee":
+                    doc = db.findADocument("Employee", "username", username);
+                    System.out.println(doc);
+
+                    Employee employee = new Employee(username, password);
+
+                    int typeGUIEmployee = login.checkLoginEmployee(employee, doc);
+
+                    switch (typeGUIEmployee) {
+                        case 0:
+                            AdminGUI adminGui = new AdminGUI();
+                            adminGui.setVisible(true);
+                            this.setVisible(false);
+                            //chiama interfaccia admin
+                            break;
+                        case 1:
+                            VeterinaryGUI vetGui = new VeterinaryGUI();
+                            vetGui.setVisible(true);
+                            this.setVisible(false);
+                            //chiama interfaccia vet
+                            break;
+
+                        case -1:
+                            JOptionPane.showMessageDialog(null, "User and password doesn't match! Retry");
+
+                            break;
+                        default:
+                            break;
+                    }
+
                     break;
-                case 1:
-                    VeterinaryGUI vetGui = new VeterinaryGUI();
-                    vetGui.setVisible(true);
-                    this.setVisible(false);
-                    //chiama interfaccia vet
+
+                case "Costumer":
+                    doc = db.findADocument("Costumer", "fiscalCode", username);
+                    System.out.println(doc);
+
+                    Costumer costumer = new Costumer(username, password);
+
+                    int typeGUICostumer = login.checkLoginCostumer(costumer, doc);
+
+                    if (typeGUICostumer == 0) {
+                        CostumerGUI cGui = new CostumerGUI();
+                        cGui.setVisible(true);
+                        this.setVisible(false);
+                    }
                     break;
-                    
-                case -1:
-                    //errore
-                    break;
-                default:
-                    break;
+
             }
+
         } catch (UnknownHostException ex) {
             Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
+
     }//GEN-LAST:event_jToggleButtonLoginMouseClicked
 
     private void jTextFieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsernameActionPerformed
@@ -188,16 +220,24 @@ public class LoginGUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -207,14 +247,17 @@ public class LoginGUI extends javax.swing.JFrame {
             public void run() {
                 try {
                     new LoginGUI().setVisible(true);
+
                 } catch (UnknownHostException ex) {
-                    Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LoginGUI.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBoxTypeUser;
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelUsername;
     private javax.swing.JTextField jTextFieldPassword;

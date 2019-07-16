@@ -30,8 +30,9 @@ public class Costumer {
     private String fiscalCode;
     private String province;
     private IdDocument document;
+    private String password;
 
-    public Costumer(String name, String surname, String dateOfBirth, String cityOfBirth, String cityOfResidence, String address, String telephone, String fiscalCode, String province, IdDocument document) {
+    public Costumer(String name, String surname, String dateOfBirth, String cityOfBirth, String cityOfResidence, String address, String telephone, String fiscalCode, String province, IdDocument document,String password) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
@@ -42,7 +43,15 @@ public class Costumer {
         this.fiscalCode = fiscalCode;
         this.province = province;
         this.document = document;
+        this.password = "";
     }
+
+    public Costumer(String fiscalCode, String password) {
+        this.fiscalCode = fiscalCode;
+        this.password = password;
+    }
+    
+    
 
     public JSONObject getCostumerObject() {
         return costumerObject;
@@ -158,6 +167,16 @@ public class Costumer {
     public ArrayList<Costumer> getcList() {
         return cList;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
 
     public Boolean fiscalCodeResearch(String cf) {
 

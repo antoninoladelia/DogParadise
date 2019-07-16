@@ -88,7 +88,7 @@ public class DaoImplementation implements Dao {
         MongoCollection<Document> collection = database.getCollection(collectionName);
         
         d= collection.find(eq(field, attribute)).first();
-        
+        System.out.println(d.getObjectId("_id").toString());
         return d;
     }
 
