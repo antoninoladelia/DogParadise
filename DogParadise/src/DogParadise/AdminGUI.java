@@ -9,7 +9,9 @@ import DogParadise.Database.Dao;
 import DogParadise.Database.DaoImplementation;
 import com.google.gson.Gson;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
 
 /**
@@ -17,11 +19,12 @@ import org.bson.Document;
  * @author aladelia
  */
 public class AdminGUI extends javax.swing.JFrame {
-    
+
     private final Dao db;
     private final Gson gson = new Gson();
     private Costumer costumer = null;
     private Dog dog = null;
+    private DefaultTableModel model;
 
     /**
      * Creates new form AdminGUI
@@ -35,7 +38,8 @@ public class AdminGUI extends javax.swing.JFrame {
         this.jLabelFiscalCode.setVisible(false);
         this.jButtonSearchFC.setVisible(false);
         this.jButtonAdd.setVisible(true);
-        
+
+          model = (DefaultTableModel) this.jTable1.getModel();
     }
 
     /**
@@ -48,6 +52,7 @@ public class AdminGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jButton1 = new javax.swing.JButton();
         jTabbedPane = new javax.swing.JTabbedPane();
         jPanelDog = new javax.swing.JPanel();
         jComboBoxSize = new javax.swing.JComboBox<>();
@@ -100,7 +105,12 @@ public class AdminGUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        jButtonShowCostumers = new javax.swing.JButton();
+        jButtonSearch = new javax.swing.JButton();
+        jTextFieldSearchByFC = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -466,7 +476,7 @@ public class AdminGUI extends javax.swing.JFrame {
                     .addComponent(jTextFieldCostumerFiscalCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(jPanelCostumerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSave)
                     .addComponent(jButtonCostumerClear))
@@ -477,44 +487,65 @@ public class AdminGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
             },
             new String [] {
-                "FiscalCode", "Name", "Surname", "Residence City", "Address"
+                "FiscalCode", "Name", "Surname", "Residence City", "Address","Telephone"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        jButtonShowCostumers.setText("Show All");
+        jButtonShowCostumers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonShowCostumersMouseClicked(evt);
+            }
+        });
+
+        jButtonSearch.setText("Search");
+        jButtonSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonSearchMouseClicked(evt);
+            }
+        });
+
+        jLabel20.setText("Fiscal Code");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldSearchByFC, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonShowCostumers, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonSearch))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 269, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(jButtonShowCostumers)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSearch)
+                    .addComponent(jTextFieldSearchByFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(216, 216, 216))
         );
 
         jTabbedPane.addTab("CostumerList", jPanel3);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 432, Short.MAX_VALUE)
-        );
-
-        jTabbedPane.addTab("tab4", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -528,7 +559,84 @@ public class AdminGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonShowCostumersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonShowCostumersMouseClicked
+        // TODO add your handling code here:
+
+        ArrayList<Document> docs = new ArrayList<>();
+
+        int i = 0;
+       
+
+        docs = db.getCollection("Costumer");
+
+        this.model.setRowCount(docs.size());
+
+        for (Document doc : docs) {
+            this.addRowtoCostumerTable(doc, i);
+            i++;
+        }
+
+    }//GEN-LAST:event_jButtonShowCostumersMouseClicked
+
+    private void jButtonCostumerClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCostumerClearActionPerformed
+        // TODO add your handling code here:
+        this.jTextFieldCostumerName.setText(null);
+        this.jTextFieldCostumerSurname.setText(null);
+        this.jTextFieldCostumerDateofBirth.setText(null);
+        this.jTextFieldCostumerCityofBirth.setText(null);
+        this.jTextFieldCostumerCityofResidence.setText(null);
+        this.jTextFieldCostumerAddress.setText(null);
+        this.jTextFieldCostumerTelephone.setText(null);
+        this.jTextFieldCostumerFiscalCode.setText(null);
+        this.jTextFieldCostumerProvince.setText(null);
+
+        this.jTextFieldDocumentNumber.setText(null);
+        this.jTextFieldExpiryDate.setText(null);
+
+        this.jTabbedPane.setSelectedIndex(0);
+    }//GEN-LAST:event_jButtonCostumerClearActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        // TODO add your handling code here:
+        String name = this.jTextFieldCostumerName.getText();
+        String surname = this.jTextFieldCostumerSurname.getText();
+        String dateOfBirth = this.jTextFieldCostumerDateofBirth.getText();
+        String cityOfBirth = this.jTextFieldCostumerCityofBirth.getText();
+        String cityOfResidence = this.jTextFieldCostumerCityofResidence.getText();
+        String address = this.jTextFieldCostumerAddress.getText();
+        String telephone = this.jTextFieldCostumerTelephone.getText();
+        String fiscalCode = this.jTextFieldCostumerFiscalCode.getText();
+        String province = this.jTextFieldCostumerProvince.getText();
+
+        String typeDocument = this.jComboBoxDocument.getSelectedItem().toString();
+        String nDocument = this.jTextFieldDocumentNumber.getText();
+        String expipryDate = this.jTextFieldExpiryDate.getText();
+
+        IdDocument idDocument = new IdDocument(typeDocument, nDocument, expipryDate);
+
+        costumer = new Costumer(name, surname, dateOfBirth, cityOfBirth, cityOfResidence, address, telephone, fiscalCode, province, idDocument, "");
+
+        Document doc = new Document("name", costumer.getName())
+                .append("surname", costumer.getSurname())
+                .append("date of birth", costumer.getDateOfBirth())
+                .append("cityOfBirth", costumer.getCityOfBirth())
+                .append("cityOfResidence", costumer.getCityOfResidence())
+                .append("address", costumer.getAddress())
+                .append("telephone", costumer.getTelephone())
+                .append("fiscalCode", costumer.getFiscalCode())
+                .append("province", costumer.getProvince())
+                .append("idDocument", gson.toJson(costumer.getIdDocument()))
+                .append("password", costumer.getPassword());
+
+        this.db.createCollection("Costumer");
+        this.db.saveToDB("Costumer", doc);
+
+        this.clearCostumerFields();
+
+    }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jTextFieldCostumerSurnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCostumerSurnameActionPerformed
         // TODO add your handling code here:
@@ -547,9 +655,9 @@ public class AdminGUI extends javax.swing.JFrame {
                 this.jLabelFiscalCode.setVisible(true);
                 this.jButtonSearchFC.setVisible(true);
                 this.jButtonAdd.setVisible(false);
-                
+
                 break;
-            
+
             case "No":
                 this.jTextFieldFiscalcode.setVisible(false);
                 this.jTextFieldFiscalcode.setText("");
@@ -560,6 +668,10 @@ public class AdminGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBoxDomesticItemStateChanged
 
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
     private void jButtonAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddMouseClicked
         // TODO add your handling code here:
         String name = this.jTextFieldName.getText();
@@ -567,14 +679,14 @@ public class AdminGUI extends javax.swing.JFrame {
         String color = this.jTextFieldColor.getText();
         Document releaser = new Document();
         Boolean domestic = null;
-        
+
         switch (this.jComboBoxDomestic.getSelectedItem().toString()) {
             case "Yes":
                 domestic = true;
                 releaser = this.db.findADocument("Costumer", "fiscalCode", this.jTextFieldFiscalcode.getText());
-                
-                IdDocument idDoc = gson.fromJson(releaser.get("document").toString(), IdDocument.class);
-                
+
+                IdDocument idDoc = gson.fromJson(releaser.get("idDocument").toString(), IdDocument.class);
+
                 costumer = new Costumer(
                         releaser.getString("name"),
                         releaser.getString("surname"),
@@ -587,21 +699,21 @@ public class AdminGUI extends javax.swing.JFrame {
                         releaser.getString("province"),
                         idDoc,
                         releaser.getString("password"));
-                
+
                 break;
             case "No":
                 domestic = false;
                 releaser = null;
                 break;
         }
-        
+
         int age = Integer.parseInt(this.jTextFieldAge.getText());
-        
+
         String gender = this.jComboBoxGender.getSelectedItem().toString();
         String size = this.jComboBoxSize.getSelectedItem().toString();
-        
+
         dog = new Dog(name, race, color, domestic, age, gender, size, costumer);
-        
+
         Document doc = new Document("name", dog.getName())
                 .append("race", dog.getRace())
                 .append("color", dog.getColor())
@@ -610,12 +722,11 @@ public class AdminGUI extends javax.swing.JFrame {
                 .append("gender", dog.getGender())
                 .append("size", dog.getSize())
                 .append("releaser", releaser);
-        
-        this.db.createTable("Dog");
+
+        this.db.createCollection("Dog");
         this.db.saveToDB("Dog", doc);
         JOptionPane.showMessageDialog(null, "Dog Added");
         this.clearDogFields();
-
     }//GEN-LAST:event_jButtonAddMouseClicked
 
     private void jButtonSearchFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchFCActionPerformed
@@ -624,16 +735,16 @@ public class AdminGUI extends javax.swing.JFrame {
 
         //costumer.ReadJson();
         Boolean res = this.db.checkExistingFieldInDb("Costumer", "fiscalCode", cf);
-        
+
         this.db.findADocument("Costumer", "fiscalCode", cf);
-        
+
         if (res) {
             JOptionPane.showMessageDialog(null, "Client found!");
             this.jButtonAdd.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Client not found");
             this.jTabbedPane.setSelectedIndex(1);
-            
+
         }
     }//GEN-LAST:event_jButtonSearchFCActionPerformed
 
@@ -654,68 +765,21 @@ public class AdminGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxSizeActionPerformed
 
-    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+    private void jButtonSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSearchMouseClicked
         // TODO add your handling code here:
-        String name = this.jTextFieldCostumerName.getText();
-        String surname = this.jTextFieldCostumerSurname.getText();
-        String dateOfBirth = this.jTextFieldCostumerDateofBirth.getText();
-        String cityOfBirth = this.jTextFieldCostumerCityofBirth.getText();
-        String cityOfResidence = this.jTextFieldCostumerCityofResidence.getText();
-        String address = this.jTextFieldCostumerAddress.getText();
-        String telephone = this.jTextFieldCostumerTelephone.getText();
-        String fiscalCode = this.jTextFieldCostumerFiscalCode.getText();
-        String province = this.jTextFieldCostumerProvince.getText();
-        
-        String typeDocument = this.jComboBoxDocument.getSelectedItem().toString();
-        String nDocument = this.jTextFieldDocumentNumber.getText();
-        String expipryDate = this.jTextFieldExpiryDate.getText();
-        
-        IdDocument idDocument = new IdDocument(typeDocument, nDocument, expipryDate);
-        
-        costumer = new Costumer(name, surname, dateOfBirth, cityOfBirth, cityOfResidence, address, telephone, fiscalCode, province, idDocument, "");
-        
-        Document doc = new Document("name", costumer.getName())
-                .append("surname", costumer.getSurname())
-                .append("date of birth", costumer.getDateOfBirth())
-                .append("cityOfBirth", costumer.getCityOfBirth())
-                .append("cityOfResidence", costumer.getCityOfResidence())
-                .append("address", costumer.getAddress())
-                .append("telephone", costumer.getTelephone())
-                .append("fiscalCode", costumer.getFiscalCode())
-                .append("province", costumer.getProvince())
-                .append("document", gson.toJson(costumer.getDocument()))
-                .append("password",costumer.getPassword());
-        
-        this.db.createTable("Costumer");
-        this.db.saveToDB("Costumer", doc);
-        
-        this.clearCostumerFields();
-        
+        Document doc = new Document();
 
-    }//GEN-LAST:event_jButtonSaveActionPerformed
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
 
-    private void jButtonCostumerClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCostumerClearActionPerformed
-        // TODO add your handling code here:
-        this.jTextFieldCostumerName.setText(null);
-        this.jTextFieldCostumerSurname.setText(null);
-        this.jTextFieldCostumerDateofBirth.setText(null);
-        this.jTextFieldCostumerCityofBirth.setText(null);
-        this.jTextFieldCostumerCityofResidence.setText(null);
-        this.jTextFieldCostumerAddress.setText(null);
-        this.jTextFieldCostumerTelephone.setText(null);
-        this.jTextFieldCostumerFiscalCode.setText(null);
-        this.jTextFieldCostumerProvince.setText(null);
-        
-        this.jTextFieldDocumentNumber.setText(null);
-        this.jTextFieldExpiryDate.setText(null);
-        
-        this.jTabbedPane.setSelectedIndex(0);
-    }//GEN-LAST:event_jButtonCostumerClearActionPerformed
+        doc = db.findADocument("Costumer", "fiscalCode", this.jTextFieldSearchByFC.getText());
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddActionPerformed
-    
+        this.model.setRowCount(1);
+
+        this.addRowtoCostumerTable(doc, 0);
+
+
+    }//GEN-LAST:event_jButtonSearchMouseClicked
+
     private void clearCostumerFields() {
         this.jTextFieldCostumerName.setText(null);
         this.jTextFieldCostumerSurname.setText(null);
@@ -726,11 +790,11 @@ public class AdminGUI extends javax.swing.JFrame {
         this.jTextFieldCostumerTelephone.setText(null);
         this.jTextFieldCostumerFiscalCode.setText(null);
         this.jTextFieldCostumerProvince.setText(null);
-        
+
         this.jTextFieldDocumentNumber.setText(null);
         this.jTextFieldExpiryDate.setText(null);
     }
-    
+
     private void clearDogFields() {
         this.jTextFieldAge.setText(null);
         this.jTextFieldColor.setText(null);
@@ -739,13 +803,25 @@ public class AdminGUI extends javax.swing.JFrame {
         this.jTextFieldRace.setText(null);
     }
 
+    private void addRowtoCostumerTable(Document doc, int index) {
+        this.jTable1.setValueAt(doc.get("fiscalCode"), index, 0);
+        this.jTable1.setValueAt(doc.get("name"), index, 1);
+        this.jTable1.setValueAt(doc.get("surname"), index, 2);
+        this.jTable1.setValueAt(doc.get("address"), index, 3);
+        this.jTable1.setValueAt(doc.get("cityOfResidence"), index, 4);
+        this.jTable1.setValueAt(doc.get("telephone"), index, 5);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCostumerClear;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonSave;
+    private javax.swing.JButton jButtonSearch;
     private javax.swing.JButton jButtonSearchFC;
+    private javax.swing.JButton jButtonShowCostumers;
     private javax.swing.JComboBox<String> jComboBoxDocument;
     private javax.swing.JComboBox<String> jComboBoxDomestic;
     private javax.swing.JComboBox<String> jComboBoxGender;
@@ -761,6 +837,7 @@ public class AdminGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -772,7 +849,6 @@ public class AdminGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelCostumer;
     private javax.swing.JPanel jPanelDog;
     private javax.swing.JScrollPane jScrollPane1;
@@ -795,5 +871,6 @@ public class AdminGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldFiscalcode;
     private javax.swing.JTextField jTextFieldName;
     private javax.swing.JTextField jTextFieldRace;
+    private javax.swing.JTextField jTextFieldSearchByFC;
     // End of variables declaration//GEN-END:variables
 }

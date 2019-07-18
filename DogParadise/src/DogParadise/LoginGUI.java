@@ -7,6 +7,8 @@ package DogParadise;
 
 import DogParadise.Database.Dao;
 import DogParadise.Database.DaoImplementation;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,18 +29,13 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() throws UnknownHostException {
 
-        /*Document docAdmin = new Document("username","aladelia")
-                    .append("password", "qazwsx")
-                    .append("typeemployee", "admin");
-        
-        Document docVet = new Document("username","amonciino")
-                    .append("password", "qazwsx")
-                    .append("typeemployee", "vet");*/
-        this.db = DaoImplementation.getInstance();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
-        //this.db.createTable("Employee");
-        //this.db.saveToDB("Employee", docAdmin);
-        //this.db.saveToDB("Employee", docVet);
+        this.db = DaoImplementation.getInstance();
+        
+        this.db.initializeEmployeeCollection();
+
         initComponents();
     }
 
@@ -59,6 +56,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jComboBoxTypeUser = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jToggleButtonLogin.setText("Login");
         jToggleButtonLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,7 +106,7 @@ public class LoginGUI extends javax.swing.JFrame {
                 .addGap(81, 81, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBoxTypeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxTypeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -130,6 +128,7 @@ public class LoginGUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPasswordActionPerformed

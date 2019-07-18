@@ -5,7 +5,9 @@
  */
 package DogParadise.Database;
 
+import java.util.ArrayList;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 
 /**
@@ -14,9 +16,13 @@ import org.bson.Document;
  */
 public interface Dao{
     
-    public Boolean createTable(String collectionName);
+    public Boolean createCollection(String collectionName);
     public void saveToDB(String collectionName, Document dbObject);
     public boolean checkExistingFieldInDb(String collectionName,String field, String attribute);
     public Document findADocument(String collectionName,String field, String attribute);
+    public void updateDB(String collectionName, Document filter, Document dbObject);
+    public Document findADocument(String collectionName,String field, ObjectId attribute);
+    public ArrayList<Document> getCollection (String collectionName);
+    public void initializeEmployeeCollection();
 }
 

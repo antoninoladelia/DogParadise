@@ -25,10 +25,6 @@ public class IdDocument {
         this.dateExpiry = dateExpiry;
     }
 
-    IdDocument(String name, String name0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public String getDateExpiry() {
         return dateExpiry;
     }

@@ -29,8 +29,6 @@ public class Login {
     
     private Costumer costumer = new Costumer();
 
-    private ArrayList<Employee> employeeList = new ArrayList<>();
-
     private static Login singleton = null;
 
     private Login() {

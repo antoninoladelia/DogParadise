@@ -6,6 +6,7 @@
 package DogParadise.Database;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -15,13 +16,17 @@ import org.bson.Document;
 
 import com.mongodb.client.MongoCursor;
 import static com.mongodb.client.model.Filters.eq;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author aladelia
  */
 public class DaoImplementation implements Dao {
-    
+
     private Document d = null;
 
     private static DaoImplementation mongoDao = null;
@@ -44,7 +49,7 @@ public class DaoImplementation implements Dao {
 
     //This is how you create a table in the mongoDB
     @Override
-    public Boolean createTable(String collectionName) {
+    public Boolean createCollection(String collectionName) {
 
         final MongoIterable<String> iterable = database.listCollectionNames();
         try (final MongoCursor<String> it = iterable.iterator()) {
@@ -66,6 +71,16 @@ public class DaoImplementation implements Dao {
 
         collection = database.getCollection(collectionName);
         collection.insertOne(dbObject);
+
+    }
+
+    @Override
+    public void updateDB(String collectionName, Document filter, Document dbObject) {
+        MongoCollection<Document> collection;
+
+        collection = database.getCollection(collectionName);
+        collection.updateOne(filter, dbObject);
+
     }
 
     @Override
@@ -82,14 +97,72 @@ public class DaoImplementation implements Dao {
             return false;
         }
     }
-    
+
     @Override
-    public Document findADocument(String collectionName,String field, String attribute){
+    public Document findADocument(String collectionName, String field, String attribute) {
         MongoCollection<Document> collection = database.getCollection(collectionName);
-        
-        d= collection.find(eq(field, attribute)).first();
-        System.out.println(d.getObjectId("_id").toString());
+
+        d = collection.find(eq(field, attribute)).first();
+
         return d;
+    }
+
+    @Override
+    public Document findADocument(String collectionName, String field, ObjectId attribute) {
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+
+        d = collection.find(eq(field, attribute)).first();
+
+        return d;
+    }
+
+    @Override
+    public ArrayList<Document> getCollection(String collectionName) {
+
+        MongoCollection<Document> collection = database.getCollection(collectionName);
+        FindIterable<Document> findIterable = collection.find(new Document());
+        MongoCursor<Document> cursor = findIterable.iterator();
+        ArrayList<Document> doc = new ArrayList<Document>();
+
+        while (cursor.hasNext()) {
+            Document d = cursor.next();
+            doc.add(d);
+        }
+
+        return doc;
+    }
+
+    @Override
+    public void initializeEmployeeCollection() {
+        try {
+            this.createCollection("Employee");
+
+            Dao dao = DaoImplementation.getInstance();
+
+            ArrayList<Document> docs = new ArrayList<>();
+
+            docs = dao.getCollection("Employee");
+
+            if (docs.isEmpty()) {
+                Document docAdmin = new Document("username", "aladelia")
+                        .append("password", "qazwsx")
+                        .append("typeemployee", "admin");
+
+                Document docVet = new Document("username", "amonciino")
+                        .append("password", "qazwsx")
+                        .append("typeemployee", "vet");
+
+                dao.saveToDB("Employee", docAdmin);
+                dao.saveToDB("Employee", docVet);
+                System.out.println("Initialized");
+            } else {
+                System.out.println("Already initialized");
+            }
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

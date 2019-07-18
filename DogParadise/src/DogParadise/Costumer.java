@@ -5,21 +5,13 @@
  */
 package DogParadise;
 
-import java.util.ArrayList;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 /**
  *
  * @author aladelia
  */
 public class Costumer {
 
-    private JSONObject costumerObject = new JSONObject();
-    private JSONArray costumerList = new JSONArray();
-
-    private ArrayList<Costumer> cList = new ArrayList<>();
-
+    
     private String name;
     private String surname;
     private String dateOfBirth;
@@ -29,10 +21,10 @@ public class Costumer {
     private String telephone;
     private String fiscalCode;
     private String province;
-    private IdDocument document;
+    private IdDocument idDocument;
     private String password;
 
-    public Costumer(String name, String surname, String dateOfBirth, String cityOfBirth, String cityOfResidence, String address, String telephone, String fiscalCode, String province, IdDocument document,String password) {
+    public Costumer(String name, String surname, String dateOfBirth, String cityOfBirth, String cityOfResidence, String address, String telephone, String fiscalCode, String province, IdDocument idDocument,String password) {
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
@@ -42,7 +34,7 @@ public class Costumer {
         this.telephone = telephone;
         this.fiscalCode = fiscalCode;
         this.province = province;
-        this.document = document;
+        this.idDocument = idDocument;
         this.password = "";
     }
 
@@ -53,21 +45,6 @@ public class Costumer {
     
     
 
-    public JSONObject getCostumerObject() {
-        return costumerObject;
-    }
-
-    public void setCostumerObject(JSONObject costumerObject) {
-        this.costumerObject = costumerObject;
-    }
-
-    public JSONArray getCostumerList() {
-        return costumerList;
-    }
-
-    public void setCostumerList(JSONArray costumerList) {
-        this.costumerList = costumerList;
-    }
 
     public String getDateOfBirth() {
         return dateOfBirth;
@@ -109,12 +86,12 @@ public class Costumer {
         this.province = province;
     }
 
-    public IdDocument getDocument() {
-        return document;
+    public IdDocument getIdDocument() {
+        return idDocument;
     }
 
-    public void setDocument(IdDocument document) {
-        this.document = document;
+    public void setIdDocument(IdDocument idDocument) {
+        this.idDocument = idDocument;
     }
     
     
@@ -164,9 +141,7 @@ public class Costumer {
         this.fiscalCode = fiscalcode;
     }
 
-    public ArrayList<Costumer> getcList() {
-        return cList;
-    }
+
 
     public String getPassword() {
         return password;
@@ -176,24 +151,5 @@ public class Costumer {
         this.password = password;
     }
     
-    
-
-    public Boolean fiscalCodeResearch(String cf) {
-
-        for (int i = 0; i < this.cList.size(); i++) {
-
-            if (cf.equalsIgnoreCase(this.cList.get(i).getFiscalcode())) {
-                System.out.println("esiste");
-                return true;
-            } else {
-                System.out.println("no costumer");
-
-            }
-
-        }
-
-        return false;
-    }
-
 
 }
